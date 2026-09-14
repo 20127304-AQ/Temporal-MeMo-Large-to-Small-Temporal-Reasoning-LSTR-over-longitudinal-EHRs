@@ -1,0 +1,42 @@
+# Temporal-MeMo: Baselines D-H — Python dependencies
+#
+# Split into logical groups. Not every baseline needs every package — see
+# each module's README for the minimal subset it actually requires. GPU
+# workloads in this repo are designed to run on Modal (https://modal.com),
+# which builds its own container images (see the `modal.Image` definitions
+# inside each *_modal.py / Modal-decorated script) — you do NOT need to
+# install torch/transformers/vllm locally just to read or edit this code.
+
+# --- Core / data handling (needed everywhere) ---
+numpy>=1.24
+pandas>=2.0
+openpyxl>=3.1          # reading benchmark_queries.xlsx
+python-dotenv>=1.0     # loading API keys from .env
+
+# --- Modal (orchestrates all GPU/LLM-serving workloads) ---
+modal>=0.63
+
+# --- LLM API clients (Executive models: Claude / Mistral fallback) ---
+anthropic==0.76.0
+mistralai==1.2.3
+
+# --- ML / deep learning (only required INSIDE Modal containers; see each
+#     script's modal.Image definition — listed here for completeness /
+#     local unit testing of non-GPU logic only) ---
+torch>=2.1
+transformers>=4.36
+accelerate>=0.25
+peft>=0.10              # LoRA adapter training (Baselines F, G)
+vllm==0.6.6.post1        # batched local inference (Baselines D, G-prep, H-prep)
+bert-score>=0.3.13       # BERTScore-F1 (evaluation/bertscore_eval.py)
+
+# --- Retrieval (BM25/MedCPT hybrid index; see common/retrieval_index.py) ---
+# Note: this repo re-implements BM25Okapi in pure NumPy (common/retrieval_index.py)
+# specifically to avoid a hard dependency on rank_bm25 — installing it is
+# optional and only useful if you want to cross-check scores against the
+# reference implementation.
+rank_bm25>=0.2.2
+
+# --- Plotting (optional, for your own result visualizations) ---
+matplotlib>=3.7
+tqdm>=4.66
