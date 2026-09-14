@@ -1,4 +1,4 @@
-# Temporal-MeMo: Baselines D–H for Temporal Clinical Question Answering over Longitudinal EHRs
+# Temporal-MeMo: Baselines for Temporal Clinical Question Answering over Longitudinal EHRs
 
 This repository consolidates the experimental pipeline code for **five
 architectural baselines** developed during the Temporal-MeMo research
